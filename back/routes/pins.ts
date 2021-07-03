@@ -1,11 +1,12 @@
 import { Request, Response, Router } from "express";
 import Pin from '../models/Pin';
+import authMiddleware from '../middlewares/auth-middleware';
 
 const router = Router();
 
 
 //create a pin
-router.post('/', async (req: Request, resp: Response) => {
+router.post('/', authMiddleware, async (req: Request, resp: Response) => {
     const newPin = new Pin(req.body);
     try{
         const savedPin = await newPin.save();
@@ -16,7 +17,7 @@ router.post('/', async (req: Request, resp: Response) => {
 });
 
 //get all pins
-router.get('/', async (req: Request, resp: Response) => {
+router.get('/', authMiddleware, async (req: Request, resp: Response) => {
     try{
         const pins = await Pin.find();
         resp.status(200).json(pins);
