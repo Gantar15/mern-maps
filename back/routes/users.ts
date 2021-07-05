@@ -14,6 +14,7 @@ function setCookieToken(resp: Response, refreshToken: string){
 }
 
 router.post('/registration', 
+  body('username').isLength({min: 3, max: 20}).withMessage('Некорректное имя пользователя'),
   body('email').isEmail().withMessage('Некорректный email'),
   body('password').isLength({min: 3, max: 32}).withMessage('Некорректный пароль'),
   async (req: Request, resp: Response, next: Function) => {

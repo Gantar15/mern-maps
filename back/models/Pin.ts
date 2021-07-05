@@ -1,11 +1,23 @@
 
-import { Schema, model } from "mongoose";
+import { Schema, model, Date } from "mongoose";
 
+interface IPin{
+    user: Schema.Types.ObjectId;
+    title: string;
+    desc: string;
+    rating: number;
+    lat: number;
+    long: number;
+    createdAt: Date;
+    updatedAt: Date;
+    save: Function;
+}
+export type {IPin};
 
 const pinSchema = new Schema({
-    username: {
-        type: String,
-        require: true
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     title: {
         type: String,

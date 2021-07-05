@@ -1,9 +1,15 @@
 import { FC } from "react";
+import { Provider } from "react-redux";
+import store from "./store";
 
-export default function App() {
+const App: FC = () => {
     return (
-        <div className="App">
-            Hello
-        </div>
+        <Provider store={store}>
+            <div className="App">
+                Hello
+            </div>
+        </Provider>
     );
-}
+};
+
+export default App;

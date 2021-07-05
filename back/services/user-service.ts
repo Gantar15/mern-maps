@@ -16,10 +16,16 @@ export type {IUserData};
 
 class UserService{
     async registration(username: string, email: string, password: string): Promise<IUserData>{
-        const candidate: IUser = await User.findOne({email});
-        if(candidate){
+        const emailCandidate: IUser | null = await User.findOne({email});
+        if(emailCandidate){
             throw ServerError.BadRequestError(`Пользователь с почтой ${email} уже зарегестрирован`);
         }
+
+        const usernameCandidate: IUser | null = await User.findOne({username});
+        if(usernameCandidate){
+            throw ServerError.BadRequestError(`Имя ${username} уже занято другим пользователем`);
+        }
+
         const salt: string = await bcrypt.genSalt(11);
         const hashPassword: string = await bcrypt.hash(password, salt);
         const activationLink: string = uuid.v4();
@@ -41,8 +47,8 @@ class UserService{
         };
     }
 
-    async activate(activationLink: string){
-        const candidate: IUser = await User.findOne({activationLink});
+    async activate(activationLink: string): Promise<void>{
+        const candidate: IUser | null = await User.findOne({activationLink});
         if(!candidate){
             throw ServerError.BadRequestError(`${activationLink} - некорректная ссылка активации`);
         }
@@ -53,7 +59,7 @@ class UserService{
     }
 
     async login(email: string, password: string): Promise<IUserData>{
-        const candidate: IUser = await User.findOne({email});
+        const candidate: IUser | null = await User.findOne({email});
         if(!candidate){
             throw ServerError.BadRequestError('Пользователь с указанной почтой не найден');
         }
