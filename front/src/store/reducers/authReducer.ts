@@ -1,20 +1,19 @@
 
-import useActions from '../../hooks/useActions';
+import { AuthResponse } from '../../types/AuthResponse';
 import type { IReducerAction } from '../../types/IReducerAction';
-import type { IUser } from '../../types/IUser';
 import {AuthActionTypes} from '../actions';
 
 
 interface IAuthStore{
-    isAuth: boolean
+    isAuth: boolean;
+    isLoading: boolean;
 }
 const defaultStore: IAuthStore = {
-    isAuth: false
+    isAuth: false,
+    isLoading: false
 };
 
-export default function authReducer(store = defaultStore, action: IReducerAction<any>): IAuthStore{
-    const {setAuthAction, setUserAction} = useActions();
-
+export default function AuthReducer(store = defaultStore, action: IReducerAction<any>): IAuthStore{
     switch(action.type){
         case AuthActionTypes.SET_AUTH:
             return {
@@ -22,30 +21,32 @@ export default function authReducer(store = defaultStore, action: IReducerAction
                 isAuth: action.payload
             };
 
+        case AuthActionTypes.SET_LOADING:
+            return {
+                ...store,
+                isLoading: action.payload
+            };
+
         case AuthActionTypes.LOGIN:{
-            const data = action.payload;
+            const data: AuthResponse = action.payload;
             localStorage.setItem('accessToken', data.accessToken);
-            setAuthAction(true);
-            setUserAction(data.user);
             return store;
         }
 
         case AuthActionTypes.REGISTRATION:{
-            const data = action.payload;
+            const data: AuthResponse = action.payload;
             localStorage.setItem('accessToken', data.accessToken);
-            setAuthAction(true);
-            setUserAction(data.user);
             return store;
         }
 
         case AuthActionTypes.LOGOUT:{
             localStorage.removeItem('accessToken');
-            setAuthAction(false);
-            setUserAction({} as IUser);
             return store;
         }
 
         case AuthActionTypes.REFRESH:
+            const data: AuthResponse = action.payload;
+            localStorage.setItem('accessToken', data.accessToken);
             return store;
     }
 

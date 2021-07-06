@@ -4,7 +4,8 @@ export enum AuthActionTypes{
     LOGOUT = 'LOGOUT',
     REGISTRATION = 'REGISTRATION',
     REFRESH = 'REFRESH',
-    SET_AUTH = 'SET_AUTH'
+    SET_AUTH = 'SET_AUTH',
+    SET_LOADING = 'SET_LOADING'
 } 
 
 export enum UserActionTypes{

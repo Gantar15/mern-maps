@@ -41,7 +41,7 @@ router.post('/login', async (req: Request, resp: Response, next: Function) => {
     }
 });
 
-router.post('/logout', async (req: Request, resp: Response, next: Function) => {
+router.get('/logout', async (req: Request, resp: Response, next: Function) => {
     try{
         const {refreshToken} = req.cookies;
         const token = await userService.logout(refreshToken);
