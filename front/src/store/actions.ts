@@ -11,3 +11,7 @@ export enum AuthActionTypes{
 export enum UserActionTypes{
     SET_USER = 'SET_USER'
 }
+
+export enum PinsActionTypes{
+    SET_PINS = 'SET_PINS'
+}

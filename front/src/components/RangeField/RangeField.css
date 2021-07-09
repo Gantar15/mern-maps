@@ -1,0 +1,19 @@
+
+.range-field{
+    width: 100%;
+    position: relative;
+}
+
+.range-field input{
+    margin-bottom: 0px !important;
+    opacity: 0;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.indicator{
+    margin-top: -2px;
+}

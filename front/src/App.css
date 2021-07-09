@@ -1,0 +1,131 @@
+
+.card{
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.card label{
+    width: max-content;
+    color: #1177DE;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+.card label:nth-of-type(n+2){
+    margin-top: 10px;
+}
+
+.card .desc{
+    font-size: 13.5px;
+}
+
+.card .date{
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.mapboxgl-popup-close-button{
+    font-size: 18px !important;
+}
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 250px;
+}
+
+form label{
+    width: max-content;
+    color: #1177DE;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+form input{
+    border: none;
+    border-bottom: 1px solid#1177DE;
+}
+
+form input, form textarea{
+    margin-bottom: 8px;
+    outline: none;
+    resize: vertical;
+}
+
+.submitButton{
+    border: none;
+    background-color: #1177DE;
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 3px;
+    margin: 0 auto;
+    margin-top: 9px;
+    color: white;
+    cursor: pointer;
+}
+
+
+nav.navigation{
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    backdrop-filter: blur(40px);
+    background-color: rgba(87, 87, 87, 0.2);
+    box-shadow: 0 0 6px 1px #2c2c2c73;
+}
+
+
+.map-styles{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 0;
+}
+
+.map-styles li {
+    cursor: pointer;
+    width: 42px;
+    height: 42px;
+}
+
+.map-styles li img{
+    width: 42px;
+    border-radius: 50%;
+}
+
+.map-styles li:nth-of-type(n+2){
+    margin-left: 5px;
+}
+
+
+nav .user-actions{
+    display: flex;
+    align-items: center;
+}
+
+.user-actions button{
+    border: none;
+    padding: 10px 15px;
+    font-weight: 700;
+    font-size: 13.5px;
+    border-radius: 2px;
+    color: white;
+}
+.login{
+    background-color: #1177DE;
+}
+.register{
+    background-color: #4b4ef7;
+}
+.logout{
+    background-color: tomato;
+}
+.user-actions button:nth-of-type(n+2){
+    margin-left: 5px;
+}

@@ -18,9 +18,9 @@ router.post('/', authMiddleware, async (req: Request, resp: Response) => {
 });
 
 //get all pins
-router.get('/', authMiddleware, async (req: Request, resp: Response) => {
+router.get('/', async (req: Request, resp: Response) => {
     try{
-        const pins: IPin[] = await Pin.find();
+        const pins: IPin[] = await Pin.find({}).populate('user');
         resp.status(200).json(pins);
     } catch(err){
         resp.status(500).json(err);

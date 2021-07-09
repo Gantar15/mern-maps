@@ -45,7 +45,7 @@ const pinSchema = new Schema({
     }
 }, {
     timestamps: true,
-    skipVersioning: true
+    versionKey: false
 });
 
 export default model('Pin', pinSchema);

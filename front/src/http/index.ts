@@ -11,13 +11,13 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(config => {
     const accessToken = localStorage.getItem('accessToken');
     config.headers.Authorization = `Bearer ${accessToken}`;
-    return config;
+    return Promise.resolve(config);
 });
 
 axiosInstance.interceptors.response.use(config => {
-    return config;
+    return Promise.resolve(config);
 }, async error => {
-    if(error.response.status === 401){
+    if(error.response && error.response.status === 401){
         try{
             const response = await axios.get<AuthResponse>(API_URL + 'users/refresh', {
                 withCredentials: true

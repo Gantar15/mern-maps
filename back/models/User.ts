@@ -38,7 +38,7 @@ const userSchema = new Schema({
     activationLink: String
 }, {
     timestamps: true,
-    skipVersioning: true
+    versionKey: false
 });
 
 export default model('User', userSchema);
