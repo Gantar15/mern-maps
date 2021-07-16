@@ -7,6 +7,7 @@ interface IUserDto{
     isActivated: boolean;
     username: string;
 }
+export type {IUserDto};
 
 export default class UserDto implements IUserDto{
     id: Schema.Types.ObjectId;

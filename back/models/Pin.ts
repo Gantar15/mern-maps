@@ -1,8 +1,9 @@
 
 import { Schema, model, Date } from "mongoose";
+import { IUser } from "./User";
 
 interface IPin{
-    user: Schema.Types.ObjectId;
+    user: Schema.Types.ObjectId | IUser;
     title: string;
     desc: string;
     rating: number;
@@ -10,6 +11,7 @@ interface IPin{
     long: number;
     createdAt: Date;
     updatedAt: Date;
+    _id: Schema.Types.ObjectId;
     save: Function;
 }
 export type {IPin};

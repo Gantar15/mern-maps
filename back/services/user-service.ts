@@ -63,6 +63,9 @@ class UserService{
         if(!candidate){
             throw ServerError.BadRequestError('Пользователь с указанной почтой не найден');
         }
+        if(!candidate.isActivated){
+            throw ServerError.BadRequestError('Подтвердите почту');
+        }
         const isPasswordCurrect: boolean = await bcrypt.compare(password, candidate.password);
         if(!isPasswordCurrect){
             throw ServerError.BadRequestError('Неверный пароль');

@@ -74,9 +74,8 @@ nav.navigation{
     display: flex;
     justify-content: space-between;
     padding: 8px;
-    backdrop-filter: blur(40px);
-    background-color: rgba(87, 87, 87, 0.2);
-    box-shadow: 0 0 6px 1px #2c2c2c73;
+    background-color: rgb(46, 46, 46);
+    box-shadow: 0 0 10px .3px #29292973;
 }
 
 
@@ -116,16 +115,30 @@ nav .user-actions{
     font-size: 13.5px;
     border-radius: 2px;
     color: white;
+    cursor: pointer;
 }
 .login{
     background-color: #1177DE;
 }
 .register{
-    background-color: #4b4ef7;
+    background-color: #1177DE;
 }
 .logout{
     background-color: tomato;
 }
 .user-actions button:nth-of-type(n+2){
     margin-left: 5px;
+}
+
+.name-block{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.name-block p{
+    margin-right: 10px;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
 }

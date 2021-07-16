@@ -8,7 +8,7 @@ export default class AuthService{
     }
 
     static async logout(): Promise<void>{
-        axiosInstance.get('/users/logout');
+        await axiosInstance.get('/users/logout');
     }
 
     static async registration(username: string, email: string, password: string): Promise<AxiosResponse<AuthResponse>>{

@@ -27,7 +27,8 @@ export const setLoadingAction = (payload: boolean) => {
 export const loginAction = (payload: {
     email: string;
     password: string;
- }) => {
+ }, successFnc: Function,
+ errorFnc: Function) => {
     return async (dispatch: Dispatch<IReducerAction<AuthResponse | boolean | IUser>>) => {
         try{
             const response = await AuthService.login(payload.email, payload.password);
@@ -37,8 +38,9 @@ export const loginAction = (payload: {
                 type: AuthActionTypes.LOGIN,
                 payload: response.data
             });
+            successFnc();
         } catch(err){
-            console.log(err?.response?.data?.message);
+            errorFnc(err?.response?.data?.message);
         }
     };
 };
@@ -47,7 +49,8 @@ export const registrationAction = (payload: {
     email: string;
     password: string;
     username: string;
- }) => {
+ }, successFnc: Function,
+ errorFnc: Function) => {
     return async (dispatch: Dispatch<IReducerAction<AuthResponse | boolean | IUser>>) => {
         try{
             const response = await AuthService.registration(payload.username, payload.email, payload.password);
@@ -57,8 +60,9 @@ export const registrationAction = (payload: {
                 type: AuthActionTypes.REGISTRATION,
                 payload: response.data
             });
+            successFnc();
         } catch(err){
-            console.log(err?.response?.data?.message);
+            errorFnc(err?.response?.data?.message);
         }
     };
 };
@@ -88,6 +92,7 @@ export const refreshAction = () => {
             });
             dispatch(setAuthAction(true));
             dispatch(setUserAction(response.data.user));
+            console.log(response.data)
             dispatch({
                 type: AuthActionTypes.REFRESH,
                 payload: response.data

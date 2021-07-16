@@ -4,7 +4,6 @@ import {Room, Star} from '@material-ui/icons';
 import useActions from "./hooks/useActions";
 import useTypedSelector from "./hooks/useTypedSelector";
 import PinsService from './services/pinsService';
-import AuthService from './services/authService';
 import RangeField from "./components/RangeField";
 import type {IRequestPinData} from './types/IPin';
 
@@ -12,11 +11,13 @@ import './App.css';
 import baseStyleImg from './imgs/base.png';
 import outdoorsStyleImg from './imgs/outdoors.png';
 import streetsStyleImg from './imgs/streets.jpg';
+import Register from "./components/Register";
+import Login from "./components/Login";
 
 
 const App: FC = () => {
     const store = useTypedSelector(store => store);
-    const {refreshAction, setPinsAction} = useActions();
+    const {refreshAction, setPinsAction, logoutAction} = useActions();
     const [viewport, setViewport] = useState({
         width: document.body.offsetWidth,
         height: window.innerHeight,
@@ -25,12 +26,13 @@ const App: FC = () => {
         zoom: 5
     });
     const [currentPlace, setCurrentPlace] = useState<string | null>(null);
-    const currentUser = '60e03b62d0257b3dd0ee69a6';
     const [newPlace, setNewPlace] = useState<null | {lat: number, long: number}>(null);
     const [mapStyle, setMapStyle] = useState(localStorage.getItem('mapStyle') || 'mapbox://styles/gnida-tvar/ckqtrji6t020h18uvi6amfmw9');
+    const [showRegister, setShowRegister] = useState<boolean>(false);
+    const [showLogin, setShowLogin] = useState<boolean>(false);
 
     useEffect(() => {
-        //Refresh access token
+        //Refresh access token (and get authentificated user info)
         if(localStorage.getItem('accessToken')){
             refreshAction();
         }
@@ -75,7 +77,7 @@ const App: FC = () => {
         const newPin: IRequestPinData = {
             lat: newPlace!.lat,
             long: newPlace!.long,
-            user: currentUser,
+            user: store.user.id,
             rating, 
             desc, 
             title
@@ -114,9 +116,8 @@ const App: FC = () => {
                                     longitude={pin.long}>
                                     <Room 
                                      style={{
-                                        zIndex: -1, 
                                         fontSize: viewport.zoom*7,
-                                        color: currentUser === pin.user._id ? '#1177DE' : '#A477DE',
+                                        color: store.user.id === pin.user.id ? '#1177DE' : '#A477DE',
                                         cursor: 'pointer'
                                      }}
                                      onClick={() => handleMarkerClick(pin._id, pin.lat, pin.long)}
@@ -183,14 +184,31 @@ const App: FC = () => {
                             </li>
                     </ul>
                     <section className="user-actions">
-                        {currentUser ? (
-                            <>
-                                <button className="login">Login</button>
-                                <button className="register">Register</button>
+                        {!store.user.id ? 
+                            (<>
+                                <button onClick={() => {
+                                    setShowRegister(false);
+                                    setShowLogin(true);
+                                }} className="login">Login</button>
+                                <button onClick={() => {
+                                    setShowLogin(false);
+                                    setShowRegister(true);
+                                    }} className="register">Register</button>
                             </>) : 
-                            (<button className="logout">Logout</button>)}
+                            (<div className="name-block">
+                                <p>{store.user.username}</p>
+                                <button onClick={logoutAction} className="logout">Logout</button>
+                            </div>)
+                        }
                     </section>
                 </nav>
+
+                {
+                    showRegister && <Register setShowRegister={setShowRegister}/>
+                }
+                {
+                    showLogin && <Login setShowLogin={setShowLogin}/>
+                }
             </ReactMapGL>
         </div>
     );
