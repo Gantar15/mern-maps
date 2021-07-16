@@ -102,7 +102,7 @@ const App: FC = () => {
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
                 onViewportChange={setViewport}
                 mapStyle={mapStyle}
-                onDblClick={handleAddClick}
+                onDblClick={store.user?.username ? handleAddClick : () => {}}
                 transitionDuration={20}
             >
                 {
